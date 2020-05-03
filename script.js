@@ -14,6 +14,7 @@ let name = nameInput.value;
         let nameValid = document.getElementById("name-field")
         nameValid.classList.remove ('input-invalid')
         nameValid.classList.add ('input-valid')
+        nameError.innerHTML = ''
     } else {
         let nameValid = document.getElementById("name-field")
         nameValid.classList.add('input-invalid')
@@ -39,6 +40,7 @@ let carModel = carModelInput.value;
         let carStatus = document.getElementById('car-field')
         carStatus.classList.add ('input-valid')
         carStatus.classList.remove ('input-invalid')
+        carError.innerHTML = ''
         
 
     } else {
@@ -60,6 +62,7 @@ if (startDate) {
     let startDateStatus = document.getElementById ('start-date-field')
     startDateStatus.classList.add ('input-valid')
     startDateStatus.classList.remove ('input-invalid')
+    dateError.innerHTML = ''
 
 } else {
     let startDateStatus = document.getElementById ('start-date-field')
@@ -80,6 +83,7 @@ if (days) {
     let dayStatus = document.getElementById ('days-field')
     dayStatus.classList.add ('input-valid')
     dayStatus.classList.remove ('input-invalid')
+    dayError.innerHTML = ''
 
 } else {
     let dayStatus = document.getElementById ('days-field')
@@ -100,6 +104,7 @@ if (creditCard) {
     let creditCardInput = document.getElementById ('credit-card-field')
     creditCardInput.classList.add ('input-valid')
     creditCardInput.classList.remove ('input-invalid')
+    creditError.innerHTML = ''
 
 } else {
     let creditCardInput = document.getElementById ('credit-card-field')
@@ -120,6 +125,7 @@ if (cvv) {
     let cvvInput = document.getElementById ('cvv-field')
     cvvInput.classList.add ('input-valid')
     cvvInput.classList.remove ('input-invalid')
+    cvvError.innerHTML = ''
 
 } else {
     let cvvInput = document.getElementById ('cvv-field')
@@ -140,11 +146,12 @@ if (expiration) {
     let expirationInput = document.getElementById ('expiration-field')
     expirationInput.classList.add ('input-valid')
     expirationInput.classList.remove ('input-invalid')
+    expirationError.innerHTML = ''
 
 } else {
     let expirationInput = document.getElementById ('expiration-field')
     expirationInput.classList.add ('input-invalid')
-    expiration.classList.remove ('input-valid')  
+    expirationInput.classList.remove ('input-valid')  
     expirationError.innerHTML = 'Expiration is required'
 
 }})
@@ -197,7 +204,7 @@ document.querySelector ('#expiration-field')
 let expirationError = document.createElement('div')
 let expirationErrorDiv = document.querySelector ("#expiration-field")
 expirationErrorDiv.appendChild (expirationError) 
-expirationError.className = ('expirationError')  //error needs to be found here 
+expirationError.className = ('expirationError') 
 
 //step 3
 
