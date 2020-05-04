@@ -1,9 +1,9 @@
 let form = document.querySelector('#parking-form')
 let formIsValid
 
-// Step 1
 
-//function validate name
+
+//name
 form.addEventListener('submit', function (event) {
     event.preventDefault()
 
@@ -23,7 +23,8 @@ let name = nameInput.value;
         
 }}) 
 
-//function validate car year & make & model
+
+//car year & make & model
 form.addEventListener('submit', function (event) {
     event.preventDefault()
 
@@ -35,12 +36,16 @@ let carMake = carMakeInput.value;
 
 let carModelInput = document.querySelector('#car-model');
 let carModel = carModelInput.value; 
+let regexCarYear = new RegExp("^[0-9]{4}$");
+let today = new Date ();
+let thisYear = today.getFullYear();
 
-    if (carYear && carMake && carModel) {
+    if (carYear && carMake && carModel && regexCarYear.test(carYear) && carYear > 1900 && carYear <= thisYear) {
         let carStatus = document.getElementById('car-field')
         carStatus.classList.add ('input-valid')
         carStatus.classList.remove ('input-invalid')
         carError.innerHTML = ''
+        
         
 
     } else {
@@ -51,112 +56,150 @@ let carModel = carModelInput.value;
 
 }})
 
-// fuction validate date parking 
+
+//date parking 
 form.addEventListener('submit', function (event) {
     event.preventDefault()
 
 let startDateInput = document.querySelector ('#start-date');
 let startDate = startDateInput.value;
+let presentDate = Date.now();
+let reserveDate = startDateInput.valueAsNumber;
 
-if (startDate) {
-    let startDateStatus = document.getElementById ('start-date-field')
-    startDateStatus.classList.add ('input-valid')
-    startDateStatus.classList.remove ('input-invalid')
-    dateError.innerHTML = ''
 
-} else {
-    let startDateStatus = document.getElementById ('start-date-field')
-    startDateStatus.classList.add ('input-invalid')
-    startDateStatus.classList.remove ('input-valid')  
-    dateError.innerHTML = 'Date is required'
+    if (startDate && presentDate < reserveDate) {
+        let startDateStatus = document.getElementById ('start-date-field')
+        startDateStatus.classList.add ('input-valid')
+        startDateStatus.classList.remove ('input-invalid')
+        dateError.innerHTML = ''
+
+    } else {
+        let startDateStatus = document.getElementById ('start-date-field')
+        startDateStatus.classList.add ('input-invalid')
+        startDateStatus.classList.remove ('input-valid')  
+        dateError.innerHTML = 'Date is required'
 
 }})
 
-//function validate number of days 
+
+//number of days 
 form.addEventListener('submit', function (event) {
     event.preventDefault()
 
 let daysInput = document.querySelector ('#days');
 let days = daysInput.value;
+let regexDays = new RegExp("^[0-9]{1,2}$"); 
 
-if (days) {
-    let dayStatus = document.getElementById ('days-field')
-    dayStatus.classList.add ('input-valid')
-    dayStatus.classList.remove ('input-invalid')
-    dayError.innerHTML = ''
+    if (days && regexDays.test(days) && days > 0 && days < 31)  {
+        let dayStatus = document.getElementById ('days-field')
+        dayStatus.classList.add ('input-valid')
+        dayStatus.classList.remove ('input-invalid')
+        dayError.innerHTML = ''
+        
 
-} else {
-    let dayStatus = document.getElementById ('days-field')
-    dayStatus.classList.add ('input-invalid')
-    dayStatus.classList.remove ('input-valid')  
-    dayError.innerHTML = 'Number of days is required'
+    } else {
+        let dayStatus = document.getElementById ('days-field')
+        dayStatus.classList.add ('input-invalid')
+        dayStatus.classList.remove ('input-valid')  
+        dayError.innerHTML = 'Number of days is required'
 
 }})
 
-//function validate credit card
+
+//credit card
+function validateCardNumber(number) {
+    var regex = new RegExp("^[0-9]{16}$");
+    if (!regex.test(number))
+        return false;
+
+    return luhnCheck(number);
+}
+
+function luhnCheck(val) {
+    var sum = 0;
+    for (var i = 0; i < val.length; i++) {
+        var intVal = parseInt(val.substr(i, 1));
+        if (i % 2 == 0) {
+            intVal *= 2;
+            if (intVal > 9) {
+                intVal = 1 + (intVal % 10);
+            }
+        }
+        sum += intVal;
+    }
+    return (sum % 10) == 0;
+}
+
+
 form.addEventListener('submit', function (event) {
     event.preventDefault()
 
 let creditCardInput = document.querySelector ('#credit-card');
 let creditCard = creditCardInput.value;
 
-if (creditCard) {
-    let creditCardInput = document.getElementById ('credit-card-field')
-    creditCardInput.classList.add ('input-valid')
-    creditCardInput.classList.remove ('input-invalid')
-    creditError.innerHTML = ''
 
-} else {
-    let creditCardInput = document.getElementById ('credit-card-field')
-    creditCardInput.classList.add ('input-invalid')
-    creditCardInput.classList.remove ('input-valid')
-    creditError.innerHTML = 'Credit card is required'
+    if (creditCard && validateCardNumber(creditCard) && luhnCheck(creditCard)) {
+        let creditCardInput = document.getElementById ('credit-card-field')
+        creditCardInput.classList.add ('input-valid')
+        creditCardInput.classList.remove ('input-invalid')
+        creditError.innerHTML = ''
+
+    } else {
+        let creditCardInput = document.getElementById ('credit-card-field')
+        creditCardInput.classList.add ('input-invalid')
+        creditCardInput.classList.remove ('input-valid')
+        creditError.innerHTML = 'Credit card is required'
       
 }})
 
-//function validate cvv
+
+
+//cvv
 form.addEventListener('submit', function (event) {
     event.preventDefault()
 
 let cvvInput = document.querySelector ('#cvv');
 let cvv = cvvInput.value;
+let regexCvv = new RegExp("^[0-9]{3}$");
 
-if (cvv) {
-    let cvvInput = document.getElementById ('cvv-field')
-    cvvInput.classList.add ('input-valid')
-    cvvInput.classList.remove ('input-invalid')
-    cvvError.innerHTML = ''
+    if (cvv && regexCvv.test(cvv)) {
+        let cvvInput = document.getElementById ('cvv-field')
+        cvvInput.classList.add ('input-valid')
+        cvvInput.classList.remove ('input-invalid')
+        cvvError.innerHTML = ''
 
-} else {
-    let cvvInput = document.getElementById ('cvv-field')
-    cvvInput.classList.add ('input-invalid')
-    cvvInput.classList.remove ('input-valid')  
-    cvvError.innerHTML = 'CVV is required'
+    } else {
+        let cvvInput = document.getElementById ('cvv-field')
+        cvvInput.classList.add ('input-invalid')
+        cvvInput.classList.remove ('input-valid')  
+        cvvError.innerHTML = 'CVV is required'
 
 }})
 
-//function validate expiration date 
+
+//expiration date 
 form.addEventListener('submit', function (event) {
     event.preventDefault()
 
 let expirationInput = document.querySelector ('#expiration');
 let expiration = expirationInput.value;
 
-if (expiration) {
-    let expirationInput = document.getElementById ('expiration-field')
-    expirationInput.classList.add ('input-valid')
-    expirationInput.classList.remove ('input-invalid')
-    expirationError.innerHTML = ''
+    if (expiration) {
+        let expirationInput = document.getElementById ('expiration-field')
+        expirationInput.classList.add ('input-valid')
+        expirationInput.classList.remove ('input-invalid')
+        expirationError.innerHTML = ''
 
-} else {
-    let expirationInput = document.getElementById ('expiration-field')
-    expirationInput.classList.add ('input-invalid')
-    expirationInput.classList.remove ('input-valid')  
-    expirationError.innerHTML = 'Expiration is required'
+    } else {
+        let expirationInput = document.getElementById ('expiration-field')
+        expirationInput.classList.add ('input-invalid')
+        expirationInput.classList.remove ('input-valid')  
+        expirationError.innerHTML = 'Expiration is required'
 
 }})
 
-//step 2 
+
+
 
 document.querySelector ('#name-field')
 let nameError = document.createElement('div')
@@ -206,6 +249,6 @@ let expirationErrorDiv = document.querySelector ("#expiration-field")
 expirationErrorDiv.appendChild (expirationError) 
 expirationError.className = ('expirationError') 
 
-//step 3
+
 
 
