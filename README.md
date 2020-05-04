@@ -20,7 +20,7 @@ Add a message to each invalid field, saying "<field> is required," where <field>
 
 This message should go away if the field is later marked as valid. This message should not repeat multiple times if the "Make Reservation" button is clicked multiple times.
 
-### Step 3
+### Step 3 
 
 Add the following validations:
 
