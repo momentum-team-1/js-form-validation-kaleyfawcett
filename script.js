@@ -183,6 +183,8 @@ form.addEventListener('submit', function (event) {
 
 let expirationInput = document.querySelector ('#expiration');
 let expiration = expirationInput.value;
+// let expirationDate = expirationInput.valueAsNumber;
+// let regexExpiration = new RegExp("^[0-9]{2}$");
 
     if (expiration) {
         let expirationInput = document.getElementById ('expiration-field')
@@ -200,6 +202,7 @@ let expiration = expirationInput.value;
 
 
 
+//error signs
 
 document.querySelector ('#name-field')
 let nameError = document.createElement('div')
