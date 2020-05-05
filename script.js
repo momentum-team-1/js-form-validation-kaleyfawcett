@@ -183,10 +183,16 @@ form.addEventListener('submit', function (event) {
 
 let expirationInput = document.querySelector ('#expiration');
 let expiration = expirationInput.value;
-// let expirationDate = expirationInput.valueAsNumber;
-// let regexExpiration = new RegExp("^[0-9]{2}$");
 
-    if (expiration) {
+let expirationMonth = parseInt(expirationInput.value.substr(0,2));
+let expirationYear = parseInt(expirationInput.value.substr(3,2))
+let thePresent = new Date ();
+let currentTime = thePresent.getFullYear() % 100;
+let expMonth = (expirationMonth -1)
+let currentMonth = thePresent.getUTCMonth(); 
+
+
+    if (expiration && (currentTime < expirationYear || currentTime === expirationYear && expMonth > currentMonth)) {
         let expirationInput = document.getElementById ('expiration-field')
         expirationInput.classList.add ('input-valid')
         expirationInput.classList.remove ('input-invalid')
@@ -200,6 +206,44 @@ let expiration = expirationInput.value;
 
 }})
 
+//price check!  
+
+form.addEventListener('submit', function(event){
+    event.preventDefault()
+let nameField = document.querySelector("#name-field")
+let carField = document.querySelector("#car-field")
+let startDateField = document.querySelector("#start-date-field")
+let daysField = document.querySelector("#days-field")
+let ccField = document.querySelector("#credit-card-field")
+let cvvField = document.querySelector("#cvv-field")
+let expirationField = document.querySelector("#expiration-field")
+
+
+    if (
+        nameField.classList.contains("input-valid") === true &&
+        carField.classList.contains("input-valid") === true &&
+        startDateField.classList.contains("input-valid") === true &&
+        daysField.classList.contains("input-valid") === true &&
+        ccField.classList.contains("input-valid") === true &&
+        cvvField.classList.contains("input-valid") === true &&
+        expirationField.classList.contains("input-valid") === true 
+    ) { 
+
+        let aday = new Date(document.querySelector("#start-date").valueAsNumber);
+        let dow = aday.getDay();
+        let price = 0;
+        for (let n = 0; n < document.querySelector("#days").value; n++) 
+
+        {   if (dow == 5 || dow == 6) price += 7;
+       
+                else price += 5;
+        dow++;
+        
+    }  if (dow > 6) dow = 0;
+        document.querySelector("#total").textContent = "Total: $" + price + ".00";
+    }   else {document.querySelector("#total").textContent = "";
+
+}})
 
 
 //error signs
